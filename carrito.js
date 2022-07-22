@@ -3,9 +3,14 @@ import {
 } from "./productos.js";
 
 // Renderizado de los productos en la pagina 
-
+function agregarAlCarrito(numero) {
+    // console.log("agregado correctamente")
+    console.log(numero)
+};
 
 const contenedor = document.getElementById("contenedor")
+const carrito = [];
+
 for (const producto of listaProductos) {
     let carritoCompras = document.createElement("div");
     carritoCompras.innerHTML = `
@@ -15,28 +20,10 @@ for (const producto of listaProductos) {
              <p class="card-text m-2 nombreTarjeta precio">Precio $ ${producto.precio}</p>
              <p class="card-text m-2 nombreTarjeta codigo">${producto.codigo}</p>
              <input type="number" placeholder="Cantidad" class="m-2">
-             <button type="submit" class="btn btn-primary mt-5 botonCarrito"> Agregar al carrito</button>
+             <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
         </div>
     </div>`;
     contenedor.append(carritoCompras);
-
-
+    const botonCarrito = document.getElementById(`boton${producto.codigo}`);
+    botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
 };
-
-
-
-
-
-
-
-
-const botonCarrito = document.querySelectorAll(".botonCarrito");
-
-function agregarAlCarrito() {
-    console.log("agregado correctamente")
-};
-
-botonCarrito.forEach((botonCarrito) => {
-    botonCarrito.addEventListener("click", agregarAlCarrito);
-
-});
