@@ -15,12 +15,13 @@ for (const producto of listaProductos) {
              <p class="card-text m-2 nombreTarjeta precio">Precio $ ${producto.precio}</p>
              <p class="card-text m-2 nombreTarjeta codigo">${producto.codigo}</p>
              <input type="number" placeholder="Cantidad" class="m-2">
-             <button type="submit" class="btn btn-primary mt-5 botonCarrito  ${producto.codigo}"> Agregar al carrito</button>
+             <button type="submit" class="btn btn-primary mt-5 botonCarrito"> Agregar al carrito</button>
         </div>
     </div>`;
     contenedor.append(carritoCompras);
+
+
 };
-// console.log(contenedor)
 
 
 
@@ -28,16 +29,14 @@ for (const producto of listaProductos) {
 
 
 
-const arrayCarrito = [];
 
 const botonCarrito = document.querySelectorAll(".botonCarrito");
 
 function agregarAlCarrito() {
-   
-console.log("producto agregado al carrito")
+    console.log("agregado correctamente")
 };
 
 botonCarrito.forEach((botonCarrito) => {
     botonCarrito.addEventListener("click", agregarAlCarrito);
-    
+
 });
