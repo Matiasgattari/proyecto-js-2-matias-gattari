@@ -2,14 +2,34 @@ import {
     listaProductos
 } from "./productos.js";
 
+const carrito = [];
+
 // Renderizado de los productos en la pagina 
 function agregarAlCarrito(numero) {
     // console.log("agregado correctamente")
-    console.log(numero)
+    // console.log(numero)
+  if (numero === 1) {
+    console.log("selecciono producto 1");
+carrito.push(listaProductos[0].precio);
+console.log(carrito);
+  } else if (numero === 2) {
+    console.log("selecciono producto 2");
+    carrito.push(listaProductos[1].precio);
+    console.log(carrito);
+  } else if (numero === 3) {
+    console.log("selecciono producto 3");
+    carrito.push(listaProductos[2].precio);
+    console.log(carrito);
+  } else if (numero === 4) {
+    console.log("selecciono producto 4");
+    carrito.push(listaProductos[3].precio);
+    console.log(carrito);
+  } else { console.log ("producto no valido")};
+  const carritoTotal = carrito.reduce((a,b) => a + b );
+console.log(`Total acumulado: $ ${carritoTotal} `);
 };
 
 const contenedor = document.getElementById("contenedor")
-const carrito = [];
 
 for (const producto of listaProductos) {
     let carritoCompras = document.createElement("div");
@@ -26,4 +46,8 @@ for (const producto of listaProductos) {
     contenedor.append(carritoCompras);
     const botonCarrito = document.getElementById(`boton${producto.codigo}`);
     botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
+
+
 };
+
+
