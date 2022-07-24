@@ -5,10 +5,11 @@ import {
 // array vacio para ir cargando las compras y los precios
 const carrito = [];
 const precios = [];
-const precioAcumulado = [];
+const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
 
 // funcion para ir agregando elementos al carrito
 function agregarAlCarrito(numero) {
+
 
     // Condicional IF para ir pusheando cada precio especifico del producto que el cliente desea
 
@@ -121,13 +122,52 @@ for (const producto of listaProductos) {
              <h3 class="card-title m-2 nombreTarjeta nombre">Cerveza ${producto.nombre}</h3>
              <p class="card-text m-2 nombreTarjeta precio">Precio $ ${producto.precio}</p>
              <p class="card-text m-2 nombreTarjeta codigo">${producto.codigo}</p>
-             <input type="number" placeholder="Cantidad" class="m-2">
+             
+             <input id="idInput${producto.codigo}" type="number" placeholder="Cantidad" class="m-2" required>
              <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
+             
         </div>
     </div>`;
     contenedor.append(carritoCompras);
     const botonCarrito = document.getElementById(`boton${producto.codigo}`);
     botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
+
+    const formulario = document.getElementById("formulario")
+    formulario.addEventListener("submit", (evento => {
+        e.preventDefault();
+    }));
+
+
+    // Leyendo cantidad de latas pedidas y transportando esa cantidad al array para generar el pedido y el precio final
+    const idInput = document.getElementById(`idInput${producto.codigo}`);
+
+    botonCarrito.addEventListener("click", () => leerCantidad(idInput))
+
+    function leerCantidad() {
+        console.log(idInput.value);
+        let cantidadPedida = idInput.value;
+        console.log("cantidad pedida", cantidadPedida);
+        if (botonCarrito === boton1) {
+            listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1;
+        }
+        if (botonCarrito === boton2) {
+            listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1;
+        }
+        if (botonCarrito === boton3) {
+            listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1;
+        }
+        if (botonCarrito === boton4) {
+            listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1;
+        }
+        if (botonCarrito === boton5) {
+            listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1;
+        }
+        if (botonCarrito === boton6) {
+            listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1;
+        }
+
+    }
+
 
 
 };
@@ -154,13 +194,12 @@ function verCarrito() {
             <h3 class="m-3">Cerveza: ${elementos.nombre}</h3>
             <h4 class="m-3">Precio por unidad: $ ${elementos.precio} </h4>
             <h4 class="m-3">Codigo: ${elementos.codigo}</h4>
-            <h4 class="m-3">Codigo: Unidades ${elementos.unidadesPedidas}</h4>
-
+            <h4 class="m-3">Unidades: ${elementos.unidadesPedidas}</h4>
         </div>
         `;
         carritoContenedor.append(contenidoCarrito);
-
     };
+
 
 
 };
@@ -173,11 +212,26 @@ verCarritoFinal.addEventListener("click", verCarrito);
 
 function renderizadoPrecio() {
 
-    const precioFinalMostrar = (precios.reduce((a, b) => a + b));
+    // sessionStorage.setItem("unidades",JSON.stringify(listaProductos))
+    // sessionStorage.setItem("precio",JSON.stringify(listaProductos.precio))
+    // const precioFinalMostrar = (precioAcumulado.reduce((a, b) => a + b));
+    // const listaProductos = JSON.parse(localStorage.getItem("unidades"));
+
+    // Calculo de cada parte que compone el precio final unidad * precio unitario
+
+    let resultado1 = parseInt(listaProductos[0].unidadesPedidas) * parseInt(listaProductos[0].precio);
+    let resultado2 = parseInt(listaProductos[1].unidadesPedidas) * parseInt(listaProductos[1].precio);
+    let resultado3 = parseInt(listaProductos[2].unidadesPedidas) * parseInt(listaProductos[2].precio);
+    let resultado4 = parseInt(listaProductos[3].unidadesPedidas) * parseInt(listaProductos[3].precio);
+    let resultado5 = parseInt(listaProductos[4].unidadesPedidas) * parseInt(listaProductos[4].precio);
+    let resultado6 = parseInt(listaProductos[5].unidadesPedidas) * parseInt(listaProductos[5].precio);
+
+    let resultadoFinal = resultado1 + resultado2 + resultado3 + resultado4 + resultado5 + resultado6;
+
     const precioFinal = document.getElementById("precioFinal")
     precioFinal.innerHTML = ``;
     let precioParrafo = document.createElement(`div`)
-    precioParrafo.innerHTML = `<h2>El total de su compra es $ ${precioFinalMostrar} .</h2>
+    precioParrafo.innerHTML = `<h2>El total de su compra es $ ${resultadoFinal} .</h2>
     `;
     precioFinal.append(precioParrafo);
 
