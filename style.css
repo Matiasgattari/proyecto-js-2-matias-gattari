@@ -40,3 +40,10 @@
     color: whitesmoke;
     text-shadow: 2px 2px 2px black;
 }
+
+.divCarritoLista{ width:100%;}
+
+main {
+    width: 100%;
+    height: 100%;
+}
