@@ -125,18 +125,29 @@ for (const producto of listaProductos) {
              
              <input id="idInput${producto.codigo}" type="number" placeholder="Cantidad" class="m-2" required>
              <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
-             
+           
         </div>
     </div>`;
     contenedor.append(carritoCompras);
     const botonCarrito = document.getElementById(`boton${producto.codigo}`);
     botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
 
-    const formulario = document.getElementById("formulario")
-    formulario.addEventListener("submit", (evento => {
-        e.preventDefault();
-    }));
+//  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
+// const form = document.getElementById(`form${producto.codigo}`);
+// form.addEventListener("click", () =>{
+//     e.preventDefault()
+// })
 
+
+// agregando sweet alert al boton de agregar al carrito
+botonCarrito.addEventListener("click", () => {Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'tu pedido ha sido cargado',
+    showConfirmButton: false,
+    timer: 3000
+  })
+});
 
     // Leyendo cantidad de latas pedidas y transportando esa cantidad al array para generar el pedido y el precio final
     const idInput = document.getElementById(`idInput${producto.codigo}`);
@@ -211,11 +222,11 @@ const verCarritoFinal = document.getElementById("verCarritoFinal");
 verCarritoFinal.addEventListener("click", verCarrito);
 
 function renderizadoPrecio() {
-
+    
     // sessionStorage.setItem("unidades",JSON.stringify(listaProductos))
     // sessionStorage.setItem("precio",JSON.stringify(listaProductos.precio))
     // const precioFinalMostrar = (precioAcumulado.reduce((a, b) => a + b));
-    // const listaProductos = JSON.parse(localStorage.getItem("unidades"));
+// const listaProductos = JSON.parse(localStorage.getItem("unidades"));
 
     // Calculo de cada parte que compone el precio final unidad * precio unitario
 
@@ -238,3 +249,5 @@ function renderizadoPrecio() {
 }
 
 verCarritoFinal.addEventListener("click", renderizadoPrecio);
+
+
