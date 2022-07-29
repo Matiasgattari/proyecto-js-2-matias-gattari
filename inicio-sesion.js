@@ -3,14 +3,7 @@ formularioInicio.addEventListener("click", (e) => {
     e.preventDefault()
 });
 
-// const login = document.getElementById("login")
-// login.addEventListener("click", () =>{
-//     let inputUsuario= document.getElementById("usuario");
-//     localStorage.setItem(`usuario`, inputUsuario.value);
-//     let contrasenia = document.getElementById("contrasenia");
-//     localStorage.setItem(`contrasenia`,contrasenia.value);
-//       });
-      
+
 
 let usuarioRegistrado = localStorage.getItem(`Nombre`)
 let usuario = document.getElementById(`usuario`)
