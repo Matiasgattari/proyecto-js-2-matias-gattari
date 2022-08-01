@@ -123,20 +123,33 @@ for (const producto of listaProductos) {
              <p class="card-text m-2 nombreTarjeta precio">Precio $ ${producto.precio}</p>
              <p class="card-text m-2 nombreTarjeta codigo">${producto.codigo}</p>
              
-             <input id="idInput${producto.codigo}" type="number" placeholder="Cantidad" class="m-2" required>
-             <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
-           
+             <form id="idFormulario${producto.codigo}" >
+               <input id="idInput${producto.codigo}" type="number" placeholder="Seleccione cantidad" class="m-2" required list="listaOpciones">
+               <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
+             </form>
+
         </div>
-    </div>`;
+    </div>
+    
+    <datalist id="listaOpciones">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">
+    <option value="5">
+    <option value="12">
+    </datalist>
+    `
+    ;
     contenedor.append(carritoCompras);
     const botonCarrito = document.getElementById(`boton${producto.codigo}`);
     botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
 
 //  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
-// const form = document.getElementById(`form${producto.codigo}`);
-// form.addEventListener("click", () =>{
-//     e.preventDefault()
-// })
+const form = document.getElementById(`idFormulario${producto.codigo}`);
+form.addEventListener("click", (e) =>{
+    e.preventDefault()
+})
 
 
 // agregando sweet alert al boton de agregar al carrito

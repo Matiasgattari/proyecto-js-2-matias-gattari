@@ -16,8 +16,8 @@ let producto1 = new Productos(1, "Rubia", 120, 50,0);
 let producto2 = new Productos(2, "Negra", 130, 50,0);
 let producto3 = new Productos(3, "Roja",140, 50,0);
 let producto4 = new Productos(4, "Honey", 150, 50,0);
-let producto5 = new Productos(5, "IPA", 150, 50,0);
-let producto6 = new Productos(6, "Pale Ale", 150, 50,0);
+let producto5 = new Productos(5, "Ipa", 150, 50,0);
+let producto6 = new Productos(6, "Pale", 150, 50,0);
 
 listaProductos.push(producto1);
 listaProductos.push(producto2);

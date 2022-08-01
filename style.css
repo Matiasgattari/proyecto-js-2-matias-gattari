@@ -1,3 +1,9 @@
+body {
+    background-color:rgb(215, 215, 255);
+}
+#barraNavegacion {
+    background-color:rgb(174, 174, 240)!important;
+}
 
 .Rubia {
     background-image: url(./img/producto1.jpg);
@@ -12,13 +18,25 @@
     
 }
 .Roja {
-    background-image: url(./img/producto4.jpg);
+    background-image: url(./img/roja.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     
 }
 .Honey {
     background-image: url(./img/producto4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.Ipa {
+    background-image: url(./img/ipa.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.Pale {
+    background-image: url(./img/pale.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     
