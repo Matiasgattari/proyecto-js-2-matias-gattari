@@ -1,6 +1,5 @@
 // PARTE DE REGISTRO DE USUARIOS
 
-
 // sacando el default al formulario de registro
 const formularioRegistro = document.getElementById(`formularioRegistro`);
 formularioRegistro.addEventListener("click", (e) => {
@@ -39,7 +38,7 @@ registrar.addEventListener("click", () => {
     let inputDireccionValor = inputDireccion.value;
     let inputContraseniaValor = inputContrasenia.value;
 
-// funcion constructora de usuarios
+    // funcion constructora de usuarios
     class Usuarios {
 
         constructor(inputNombreValor, inputApellidoValor, inputDireccionValor, inputContraseniaValor) {
@@ -52,9 +51,19 @@ registrar.addEventListener("click", () => {
     usuarios.push(new Usuarios(inputNombreValor, inputApellidoValor, inputDireccionValor, inputContraseniaValor))
     console.log(usuarios);
 
-     localStorage.setItem("usuarios", JSON.stringify(usuarios));
-});
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
+
+
+    Swal.fire({
+        title: `Usuario registrado con exito`,
+        timer: 2500,
+        timerProgressBar: true,
+        allowOutsideClick: true,
+        showConfirmButton: false
+    });
+
+});
 
 
 
@@ -63,6 +72,7 @@ registrar.addEventListener("click", () => {
 
 // agregando evento al boton de login
 const botonLogin = document.getElementById(`botonLogin`);
+
 botonLogin.addEventListener(`click`, () => {
 
     let usuarioLogin = document.getElementById(`usuarioLogin`);
@@ -71,28 +81,34 @@ botonLogin.addEventListener(`click`, () => {
     let contraseniaLoginValor = contraseniaLogin.value
 
 
+    // debugger;
 
-    // TRATAR DE PASAR ACA UN FOR EACH para cada usuario del arreglo USUARIOS para buscar nombre de usuario y contrasenia iguales
-    // no puedo guardar el arreglo usuarios completo en el localStorage, solo se me guarda el ultimo usuario ingresado.
-    let usuarioStorage = JSON.parse(localStorage.getItem(`usuarios`));
+    // trayendo valores del localStorage como array
+    let usuariosStorage = JSON.parse(localStorage.getItem("usuarios"));
+    console.log(usuariosStorage);
 
+    // debugger;
 
-// usando IF para validar inicio de sesion, vinculado al usuario posicion 0 del array usuario
-if (usuarioLoginValor === usuarioStorage[0].nombre && contraseniaLoginValor === usuarioStorage[0].contrasenia) {
-    Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Tu sesion ha sido inisiada',
-        showConfirmButton: false,
-        timer: 2500
-      })
-} else {
-    Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Datos incorrectos. Por favor ingrese los datos correctos',
-        showConfirmButton: false,
-        timer: 4500
-      })
-}
+// validacion de que el nombre de usuario y contrasenia estan en el localStorage, por medio de forEach
+
+    usuariosStorage.forEach(object => {
+        if (object.nombre === usuarioLoginValor && object.contrasenia === contraseniaLoginValor) {
+            Swal.fire({
+                title: `Sesion iniciada`,
+                timer: 2500,
+                timerProgressBar: true,
+                allowOutsideClick: true,
+                showConfirmButton: false
+            });
+        } else {
+            Swal.fire({
+                title: `intente nuevamente`,
+                timer: 2500,
+                timerProgressBar: true,
+                allowOutsideClick: true,
+                showConfirmButton: false
+            });
+        }
+    });
+
 });
