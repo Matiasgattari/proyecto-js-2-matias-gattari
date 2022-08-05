@@ -7,6 +7,29 @@ const carrito = [];
 const precios = [];
 const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
 
+
+
+// Saludo e info al abrir pagina de carrito
+
+Swal.fire({
+    title: '<strong>¿Cómo comprar?</strong>',
+    icon: 'info',
+    html:
+      'De nuestra lista de variedades, haga click en donde dice <b>"seleccione cantidad"</b> para desplegar un menú con opciones.   ' +
+      'Seleccione de la lista la cantidad que desea ordenar.   ' +
+      'Puede agregar el mismo producto las veces que desee.   ' +
+      'En "ver carrito" podra ver las unidades pedidas.  Gracias por su compra :) ',
+    showCloseButton: true,
+    showCancelButton: false,
+    focusConfirm: false,
+    confirmButtonText:
+      '<i class="fa fa-thumbs-up"></i> Entiendo!',
+    confirmButtonAriaLabel: 'Thumbs up, great!',
+    
+  })
+
+
+
 // funcion para ir agregando elementos al carrito
 function agregarAlCarrito(numero) {
 
@@ -118,12 +141,12 @@ for (const producto of listaProductos) {
     let carritoCompras = document.createElement("div");
     carritoCompras.innerHTML = `
     <div class="card m-5 ${producto.nombre} margenTarjetas ">
-        <div class="card-body contenedorTarjetas align-items-center justify-content-center d-flex flex-column divTarjeta">
+        <div class="card-body contenedorTarjetas align-items-center justify-content-center d-flex flex-column">
              <h3 class="card-title m-2 nombreTarjeta nombre">Cerveza ${producto.nombre}</h3>
-             <p class="card-text m-2 nombreTarjeta precio">Precio $ ${producto.precio}</p>
-             <p class="card-text m-2 nombreTarjeta codigo">${producto.codigo}</p>
+             <p class="card-text m-2 nombreTarjeta precio">Precio unidad $${producto.precio}</p>
+             <p class="card-text m-2 nombreTarjeta codigo">Código producto: ${producto.codigo}</p>
              
-             <form id="idFormulario${producto.codigo}" >
+             <form id="idFormulario${producto.codigo}" class="align-items-center justify-content-center d-flex flex-column">
                <input id="idInput${producto.codigo}" type="number" placeholder="Seleccione cantidad" class="m-2" required list="listaOpciones">
                <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
              </form>
@@ -156,7 +179,7 @@ form.addEventListener("click", (e) =>{
 botonCarrito.addEventListener("click", () => {Swal.fire({
     position: 'center',
     icon: 'success',
-    title: 'tu pedido ha sido cargado',
+    title: 'Producto cargado correctamente',
     showConfirmButton: false,
     timer: 3000
   })
@@ -204,7 +227,7 @@ function verCarrito() {
 
 
 
-    // Renderizado de los productos en el carrito de compras
+// Renderizado de los productos en el carrito de compras
     const carritoContenedor = document.getElementById("carrito");
     carritoContenedor.innerHTML = ``;
 
@@ -236,12 +259,8 @@ verCarritoFinal.addEventListener("click", verCarrito);
 
 function renderizadoPrecio() {
     
-    // sessionStorage.setItem("unidades",JSON.stringify(listaProductos))
-    // sessionStorage.setItem("precio",JSON.stringify(listaProductos.precio))
-    // const precioFinalMostrar = (precioAcumulado.reduce((a, b) => a + b));
-// const listaProductos = JSON.parse(localStorage.getItem("unidades"));
-
-    // Calculo de cada parte que compone el precio final unidad * precio unitario
+   
+ // Calculo de cada parte que compone el precio final unidad * precio unitario
 
     let resultado1 = parseInt(listaProductos[0].unidadesPedidas) * parseInt(listaProductos[0].precio);
     let resultado2 = parseInt(listaProductos[1].unidadesPedidas) * parseInt(listaProductos[1].precio);

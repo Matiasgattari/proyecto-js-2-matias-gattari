@@ -13,12 +13,13 @@ formularioLogin.addEventListener("click", (e) => {
 });
 
 
+// Arreglo vacio usuarios para ir pusheando
 let usuarios = [];
-
-const registrar = document.getElementById(`registrar`)
 
 
 // Agregando evento al boton de registrar
+const registrar = document.getElementById(`registrar`)
+
 registrar.addEventListener("click", () => {
 
     let inputNombre = document.getElementById("inputNombre");
@@ -49,15 +50,14 @@ registrar.addEventListener("click", () => {
         }
     }
     usuarios.push(new Usuarios(inputNombreValor, inputApellidoValor, inputDireccionValor, inputContraseniaValor))
+
     console.log(usuarios);
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-
-
     Swal.fire({
         title: `Usuario registrado con exito`,
-        timer: 2500,
+        timer: 2000,
         timerProgressBar: true,
         allowOutsideClick: true,
         showConfirmButton: false
@@ -94,16 +94,16 @@ botonLogin.addEventListener(`click`, () => {
     usuariosStorage.forEach(object => {
         if (object.nombre === usuarioLoginValor && object.contrasenia === contraseniaLoginValor) {
             Swal.fire({
-                title: `Sesion iniciada`,
-                timer: 2500,
+                title: `Sesion iniciada correctamente, bienvenido! ${object.nombre}`,
+                timer: 2000,
                 timerProgressBar: true,
                 allowOutsideClick: true,
                 showConfirmButton: false
             });
         } else {
             Swal.fire({
-                title: `intente nuevamente`,
-                timer: 2500,
+                title: `Intente nuevamente, los valores no coinciden`,
+                timer: 2000,
                 timerProgressBar: true,
                 allowOutsideClick: true,
                 showConfirmButton: false
