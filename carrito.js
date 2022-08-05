@@ -155,12 +155,9 @@ for (const producto of listaProductos) {
     </div>
     
     <datalist id="listaOpciones">
-    <option value="1">
-    <option value="2">
-    <option value="3">
-    <option value="4">
-    <option value="5">
+    <option value="6">
     <option value="12">
+    <option value="24">
     </datalist>
     `
     ;

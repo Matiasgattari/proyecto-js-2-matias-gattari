@@ -23,21 +23,18 @@ const registrar = document.getElementById(`registrar`)
 registrar.addEventListener("click", () => {
 
     let inputNombre = document.getElementById("inputNombre");
-    // localStorage.setItem(`Nombre`, inputNombre.value);
+    let inputNombreValor = inputNombre.value;
 
     let inputApellido = document.getElementById(`inputApellido`);
-    // localStorage.setItem(`Apellido`, inputApellido.value);
+    let inputApellidoValor = inputApellido.value;
 
     let inputDireccion = document.getElementById(`inputDireccion`);
-    // localStorage.setItem(`Direccion`, inputDireccion.value);
+    let inputDireccionValor = inputDireccion.value;
 
     let inputContrasenia = document.getElementById("inputContrasenia");
-    // localStorage.setItem(`contrasenia`,inputContrasenia.value);
-
-    let inputNombreValor = inputNombre.value;
-    let inputApellidoValor = inputApellido.value;
-    let inputDireccionValor = inputDireccion.value;
     let inputContraseniaValor = inputContrasenia.value;
+    
+
 
     // funcion constructora de usuarios
     class Usuarios {
@@ -74,41 +71,46 @@ registrar.addEventListener("click", () => {
 const botonLogin = document.getElementById(`botonLogin`);
 
 botonLogin.addEventListener(`click`, () => {
+// trayendo valores del localStorage como array
+let usuariosStorage = JSON.parse(localStorage.getItem("usuarios"));
+console.log(usuariosStorage);
 
-    let usuarioLogin = document.getElementById(`usuarioLogin`);
-    let usuarioLoginValor = usuarioLogin.value;
-    let contraseniaLogin = document.getElementById(`contraseniaLogin`);
-    let contraseniaLoginValor = contraseniaLogin.value
+ let usuarioLogin = document.getElementById(`usuarioLogin`);
+ let usuarioLoginValor = usuarioLogin.value;
+ let contraseniaLogin = document.getElementById(`contraseniaLogin`);
+ let contraseniaLoginValor = contraseniaLogin.value
 
-
-    // debugger;
-
-    // trayendo valores del localStorage como array
-    let usuariosStorage = JSON.parse(localStorage.getItem("usuarios"));
-    console.log(usuariosStorage);
-
-    // debugger;
-
+console.log(`log de valor usuario`,usuarioLoginValor);
+console.log(`log de valor contrasenia`,contraseniaLoginValor);
+   
 // validacion de que el nombre de usuario y contrasenia estan en el localStorage, por medio de forEach
+const search = element => element.nombre === usuarioLoginValor;
+console.log(`prueba find usuarioStorage`)
+console.log(usuariosStorage.find(search));
+let usuarioEncontrado = usuariosStorage.find(search);
+console.log(`log de usuarioEncontrado`, usuarioEncontrado);
 
-    usuariosStorage.forEach(object => {
-        if (object.nombre === usuarioLoginValor && object.contrasenia === contraseniaLoginValor) {
-            Swal.fire({
-                title: `Sesion iniciada correctamente, bienvenido! ${object.nombre}`,
-                timer: 2000,
-                timerProgressBar: true,
-                allowOutsideClick: true,
-                showConfirmButton: false
-            });
-        } else {
-            Swal.fire({
-                title: `Intente nuevamente, los valores no coinciden`,
-                timer: 2000,
-                timerProgressBar: true,
-                allowOutsideClick: true,
-                showConfirmButton: false
-            });
-        }
-    });
-
+if (usuarioEncontrado.contrasenia === contraseniaLoginValor) {
+    Swal.fire({
+                    title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    allowOutsideClick: true,
+                    showConfirmButton: false
+                });
+} else {
+    Swal.fire({
+                    title: `Intente nuevamente, los valores no coinciden`,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    allowOutsideClick: true,
+                    showConfirmButton: false
+                });
+}
 });
+
+
+
+
+
+
