@@ -5,8 +5,8 @@ import {
 // array vacio para ir cargando las compras y los precios
 const carrito = [];
 const precios = [];
-const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
-
+// const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
+const carritoContenedor = document.getElementById("carrito");
 
 
 // Saludo e info al abrir pagina de carrito
@@ -14,19 +14,17 @@ const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
 Swal.fire({
     title: '<strong>¿Cómo comprar?</strong>',
     icon: 'info',
-    html:
-      'De nuestra lista de variedades, haga click en donde dice <b>"seleccione cantidad"</b> para desplegar un menú con opciones.   ' +
-      'Seleccione de la lista la cantidad que desea ordenar.   ' +
-      'Puede agregar el mismo producto las veces que desee.   ' +
-      'En "ver carrito" podra ver las unidades pedidas.  Gracias por su compra :) ',
+    html: 'De nuestra lista de variedades, haga click en donde dice <b>"seleccione cantidad"</b> para desplegar un menú con opciones.   ' +
+        'Seleccione de la lista la cantidad que desea ordenar.   ' +
+        'Puede agregar el mismo producto las veces que desee.   ' +
+        'En "ver carrito" podra ver las unidades pedidas.  Gracias por su compra :) ',
     showCloseButton: true,
     showCancelButton: false,
     focusConfirm: false,
-    confirmButtonText:
-      '<i class="fa fa-thumbs-up"></i> Entiendo!',
+    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Entiendo!',
     confirmButtonAriaLabel: 'Thumbs up, great!',
-    
-  })
+
+})
 
 
 
@@ -159,28 +157,28 @@ for (const producto of listaProductos) {
     <option value="12">
     <option value="24">
     </datalist>
-    `
-    ;
+    `;
     contenedor.append(carritoCompras);
     const botonCarrito = document.getElementById(`boton${producto.codigo}`);
     botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
 
-//  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
-const form = document.getElementById(`idFormulario${producto.codigo}`);
-form.addEventListener("click", (e) =>{
-    e.preventDefault()
-})
+    //  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
+    const form = document.getElementById(`idFormulario${producto.codigo}`);
+    form.addEventListener("click", (e) => {
+        e.preventDefault()
+    })
 
 
-// agregando sweet alert al boton de agregar al carrito
-botonCarrito.addEventListener("click", () => {Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Producto cargado correctamente',
-    showConfirmButton: false,
-    timer: 3000
-  })
-});
+    // agregando sweet alert al boton de agregar al carrito
+    botonCarrito.addEventListener("click", () => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Producto cargado correctamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
 
     // Leyendo cantidad de latas pedidas y transportando esa cantidad al array para generar el pedido y el precio final
     const idInput = document.getElementById(`idInput${producto.codigo}`);
@@ -210,54 +208,20 @@ botonCarrito.addEventListener("click", () => {Swal.fire({
             listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1;
         }
 
+
+// agrego clase para ocultar el carrito cada vez que cargo producto nuevo para que se recargue al apretar "ver carrito"
+        carritoContenedor.classList.add("ocultar");
     }
 
 
 
 };
 
-
-
-// Funcion para "ver carrito de compras" 
-function verCarrito() {
-
-
-
-
-// Renderizado de los productos en el carrito de compras
-    const carritoContenedor = document.getElementById("carrito");
-    carritoContenedor.innerHTML = ``;
-
-
-    for (const elementos of carrito) {
-
-        let contenidoCarrito = document.createElement("div");
-        contenidoCarrito.classList.add(`divCarritoLista`);
-        contenidoCarrito.innerHTML = `
-        <div id="divCarritoLista" class="d-flex flex-row flex-wrap">
-            <h3 class="m-3">Cerveza: ${elementos.nombre}</h3>
-            <h4 class="m-3">Precio por unidad: $ ${elementos.precio} </h4>
-            <h4 class="m-3">Codigo: ${elementos.codigo}</h4>
-            <h4 class="m-3">Unidades: ${elementos.unidadesPedidas}</h4>
-        </div>
-        `;
-        carritoContenedor.append(contenidoCarrito);
-    };
-
-
-
-};
-
-
 // Funcionalidad al boton de Ver carrito
-
-const verCarritoFinal = document.getElementById("verCarritoFinal");
-verCarritoFinal.addEventListener("click", verCarrito);
-
 function renderizadoPrecio() {
-    
-   
- // Calculo de cada parte que compone el precio final unidad * precio unitario
+    const carritoContenedor = document.getElementById("carrito");
+
+    // Calculo de cada parte que compone el precio final unidad * precio unitario
 
     let resultado1 = parseInt(listaProductos[0].unidadesPedidas) * parseInt(listaProductos[0].precio);
     let resultado2 = parseInt(listaProductos[1].unidadesPedidas) * parseInt(listaProductos[1].precio);
@@ -273,10 +237,81 @@ function renderizadoPrecio() {
     let precioParrafo = document.createElement(`div`)
     precioParrafo.innerHTML = `<h2>El total de su compra es $ ${resultadoFinal} .</h2>
     `;
-    precioFinal.append(precioParrafo);
+    carritoContenedor.append(precioParrafo);
 
 }
 
-verCarritoFinal.addEventListener("click", renderizadoPrecio);
+
+
+
+// Funcion para "ver carrito de compras" 
+function verCarrito() {
+
+
+    // Renderizado de los productos en el carrito de compras
+    
+    carritoContenedor.classList.remove("ocultar");
+    carritoContenedor.innerHTML = ``;
+
+    for (const elementos of carrito) {
+
+        let contenidoCarrito = document.createElement("div");
+        contenidoCarrito.classList.add(`divCarritoLista`);
+        contenidoCarrito.innerHTML = `
+        <div id="" class="d-flex flex-row flex-wrap borrarDiv">
+            <h3 class="m-3">Cerveza: ${elementos.nombre}</h3>
+            <h4 class="m-3">Precio por unidad: $ ${elementos.precio} </h4>
+            <h4 class="m-3">Codigo: ${elementos.codigo}</h4>
+            <h4 class="m-3">Unidades: ${elementos.unidadesPedidas}</h4>
+        </div>
+        `;
+        carritoContenedor.append(contenidoCarrito);
+    };
+
+
+    // Llamo funcion de precio final del carrito
+    renderizadoPrecio();
+
+    // creo el boton para cerrar el carrito
+    let botonCerrarCarrito = document.createElement(`div`);
+    botonCerrarCarrito.innerHTML = `<button id="cerrarCarritoCompras" class="">cerrar carrito</button>`;
+    carritoContenedor.append(botonCerrarCarrito);
+
+    // Funcionalidad boton cerrar carrito
+
+    let botonCerrarCarritoFuncion = document.getElementById(`cerrarCarritoCompras`);
+    botonCerrarCarritoFuncion.addEventListener(`click`, ()=> {
+    
+        carritoContenedor.classList.add("ocultar");
+    })
+
+    // creo el boton para eliminar el carrito
+    let botonEliminarCarrito = document.createElement(`div`);
+    botonEliminarCarrito.innerHTML = `<button id="eliminarCarritoCompras" class="">Eliminar</button>`;
+    carritoContenedor.append(botonEliminarCarrito);
+
+
+    
+    // funcionalidad al boton eliminar (no funciona)
+    // const eliminarCarro = document.getElementById(`eliminarCarritoCompras`);
+    // eliminarCarro.addEventListener(`click`, ()=>{
+    // // let borrarDiv = document.getElementById(`borrarDiv`);
+    // carritoContenedor.remove();
+
+    // const divContenedorCarrito = document.getElementById(`divContenedorCarrito`);
+    // // const nuevoCarrito = document.createElement(`div`)
+    // divContenedorCarrito.innerHTML=`<div id="carrito" class="d-flex flex-column m-5 flex-wrap justify-content-center align-items-center ocultar">
+       
+    // </div>
+    // `
+    // // divContenedorCarrito.append(nuevoCarrito)
+    // })
+
+
+};
+
+const verCarritoFinal = document.getElementById("verCarritoFinal");
+verCarritoFinal.addEventListener("click", verCarrito);
+
 
 
