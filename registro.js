@@ -90,26 +90,44 @@ console.log(usuariosStorage.find(search));
 let usuarioEncontrado = usuariosStorage.find(search);
 console.log(`log de usuarioEncontrado`, usuarioEncontrado);
 
-if (usuarioEncontrado.contrasenia === contraseniaLoginValor) {
-    Swal.fire({
-                    title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    allowOutsideClick: true,
-                    showConfirmButton: false
-                });
-} else {
-    Swal.fire({
-                    title: `Intente nuevamente, los valores no coinciden`,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    allowOutsideClick: true,
-                    showConfirmButton: false
-                });
-}
+
+// if reemplazado por ternario. validacion usuario y contrasenia
+usuarioEncontrado.contrasenia === contraseniaLoginValor ? Swal.fire({
+    title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
+    timer: 2000,
+    timerProgressBar: true,
+    allowOutsideClick: true,
+    showConfirmButton: false
+}) : Swal.fire({
+    title: `Intente nuevamente, los valores no coinciden`,
+    timer: 2000,
+    timerProgressBar: true,
+    allowOutsideClick: true,
+    showConfirmButton: false
 });
 
 
+
+// if original para borrar
+// if (usuarioEncontrado.contrasenia === contraseniaLoginValor) {
+//     Swal.fire({
+//                     title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
+//                     timer: 2000,
+//                     timerProgressBar: true,
+//                     allowOutsideClick: true,
+//                     showConfirmButton: false
+//                 });
+// } else {
+//     Swal.fire({
+//                     title: `Intente nuevamente, los valores no coinciden`,
+//                     timer: 2000,
+//                     timerProgressBar: true,
+//                     allowOutsideClick: true,
+//                     showConfirmButton: false
+//                 });
+// }
+
+});
 
 
 

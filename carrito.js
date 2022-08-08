@@ -189,21 +189,31 @@ for (const producto of listaProductos) {
         console.log(idInput.value);
         let cantidadPedida = idInput.value;
         console.log("cantidad pedida", cantidadPedida);
+
+
+        // ternario FUNCIONAL reemplazando cadena de if de abajo. dejo silenciado porque me resulta mas practico leer de la otra forma
+        // botonCarrito === boton1 ? listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1 :  botonCarrito === boton2 ? listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1 :botonCarrito === boton3 ? listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1 : botonCarrito === boton4 ? listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1 : botonCarrito === boton5 ? listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1 : botonCarrito === boton6 ? listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1 : console.log("fin");
+        
         if (botonCarrito === boton1) {
             listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1;
         }
+
         if (botonCarrito === boton2) {
             listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1;
         }
+
         if (botonCarrito === boton3) {
             listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1;
         }
+
         if (botonCarrito === boton4) {
             listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1;
         }
+
         if (botonCarrito === boton5) {
             listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1;
         }
+
         if (botonCarrito === boton6) {
             listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1;
         }
@@ -295,17 +305,22 @@ function verCarrito() {
     // funcionalidad al boton eliminar (no funciona)
     // const eliminarCarro = document.getElementById(`eliminarCarritoCompras`);
     // eliminarCarro.addEventListener(`click`, ()=>{
-    // // let borrarDiv = document.getElementById(`borrarDiv`);
     // carritoContenedor.remove();
-
     // const divContenedorCarrito = document.getElementById(`divContenedorCarrito`);
-    // // const nuevoCarrito = document.createElement(`div`)
-    // divContenedorCarrito.innerHTML=`<div id="carrito" class="d-flex flex-column m-5 flex-wrap justify-content-center align-items-center ocultar">
-       
+    // const nuevoCarrito = document.createElement(`div`);
+    // nuevoCarrito.innerHTML=`<div id="carrito" class="d-flex flex-column m-5 flex-wrap justify-content-center align-items-center ocultar">
     // </div>
     // `
-    // // divContenedorCarrito.append(nuevoCarrito)
+    // divContenedorCarrito.append(nuevoCarrito)
     // })
+
+
+    //   funcionalidad al boton eliminar (no funciona)
+//     const eliminarCarro = document.getElementById(`eliminarCarritoCompras`);
+//     eliminarCarro.addEventListener(`click`, ()=>{
+// const divEliminar = document.querySelector(`.divEliminar`);
+// divEliminar.remove();
+// })
 
 
 };
