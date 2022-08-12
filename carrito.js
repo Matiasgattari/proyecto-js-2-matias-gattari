@@ -1,9 +1,22 @@
-import {
-    listaProductos
-} from "./productos.js";
+// import {
+//     listaProductos
+// } from "./productos.js";
 
 // array vacio para ir cargando las compras al carrito
 const carrito = [];
+
+const listaProductos = [];
+// clase constructora productos
+class Productos {
+    constructor(codigo, nombre, precio, stock,unidadesPedidas) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = stock;
+        this.unidadesPedidas = unidadesPedidas;
+        };
+    
+    };
 
 
 // const precioAcumulado = [JSON.parse(localStorage.getItem("productos"))];
@@ -24,7 +37,6 @@ Swal.fire({
     focusConfirm: false,
     confirmButtonText: '<i class="fa fa-thumbs-up"></i> Entiendo!',
     confirmButtonAriaLabel: 'Thumbs up, great!',
-
 })
 
 
@@ -37,10 +49,6 @@ console.log(carritoLocalStorage)
 
 
 
-
-
-
-
 // Tratando de mantener la funcionaldiad del carrito si el localStorage no esta vacio. NO PUEDO hacer que el carrito se me cargue con los datos de carritoLocalStorage
 if (carritoLocalStorage === [] || carritoLocalStorage === null) {
     console.log("el carrito storage esta vacio");
@@ -50,15 +58,6 @@ if (carritoLocalStorage === [] || carritoLocalStorage === null) {
     console.log("console log carrito ")
     console.log(carrito)
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -115,7 +114,6 @@ function agregarAlCarrito(numero) {
             console.log("unidades 4 pedidassssss", listaProductos[3].unidadesPedidas)
         } else {
             carrito.push(listaProductos[3]);
-            precios.push(listaProductos[3].precio);
             // listaProductos[3].unidadesPedidas = listaProductos[3].unidadesPedidas + 1;
             listaProductos[3].unidadesPedidas++
             console.log("unidades 4 pedidassssss", listaProductos[3].unidadesPedidas)
@@ -152,105 +150,123 @@ function agregarAlCarrito(numero) {
         console.log("producto no valido")
     };
 
-    //   Metodo reduce para sumar todos los precios del carrito
-    // const carritoTotal = precios.reduce((a, b) => a + b);
-    // console.log(`Total acumulado: $ ${carritoTotal} `);
-
-};
-
-
-// Renderizado de los productos en la pagina 
-const contenedor = document.getElementById("contenedor")
-
-for (const producto of listaProductos) {
-    let carritoCompras = document.createElement("div");
-    carritoCompras.innerHTML = `
-    <div class="card m-5 ${producto.nombre} margenTarjetas ">
-        <div class="card-body contenedorTarjetas align-items-center justify-content-center d-flex flex-column">
-             <h3 class="card-title m-2 nombreTarjeta nombre">Cerveza ${producto.nombre}</h3>
-             <p class="card-text m-2 nombreTarjeta precio">Precio unidad $${producto.precio}</p>
-             <p class="card-text m-2 nombreTarjeta codigo">Código producto: ${producto.codigo}</p>
-             
-             <form id="idFormulario${producto.codigo}" class="align-items-center justify-content-center d-flex flex-column">
-               <input id="idInput${producto.codigo}" type="number" placeholder="Seleccione cantidad" class="m-2" required list="listaOpciones">
-               <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
-             </form>
-
-        </div>
-    </div>
     
-    <datalist id="listaOpciones">
-    <option value="6">
-    <option value="12">
-    <option value="24">
-    </datalist>
-    `;
-    contenedor.append(carritoCompras);
-    const botonCarrito = document.getElementById(`boton${producto.codigo}`);
-    botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
+};
 
-    //  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
-    const form = document.getElementById(`idFormulario${producto.codigo}`);
-    form.addEventListener("click", (e) => {
-        e.preventDefault()
+// renderizado de productos de la pagina a partir de json y fetch
+const cargar = async  ()=>{
+
+    fetch("./data.json")
+    .then(response  => response.json() )
+    .then(data => {
+        console.log(data);
+
+        data.forEach((producto) =>{
+              listaProductos.push(new Productos(producto.codigo, producto.nombre, producto.precio, producto.cantidad, producto.unidadesPedidas))
+             })
+             const contenedor = document.getElementById("contenedor")
+
+             for (const producto of listaProductos) {
+                 let carritoCompras = document.createElement("div");
+                 console.log("log de carrito compras",carritoCompras)
+                 carritoCompras.innerHTML = `
+                 <div class="card m-5 ${producto.nombre} margenTarjetas ">
+                     <div class="card-body contenedorTarjetas align-items-center justify-content-center d-flex flex-column">
+                          <h3 class="card-title m-2 nombreTarjeta nombre">Cerveza ${producto.nombre}</h3>
+                          <p class="card-text m-2 nombreTarjeta precio">Precio unidad $${producto.precio}</p>
+                          <p class="card-text m-2 nombreTarjeta codigo">Código producto: ${producto.codigo}</p>
+                          
+                          <form id="idFormulario${producto.codigo}" class="align-items-center justify-content-center d-flex flex-column">
+                            <input id="idInput${producto.codigo}" type="number" placeholder="Seleccione cantidad" class="m-2" required list="listaOpciones">
+                            <button type="submit" class="btn btn-primary mt-5 botonCarrito" id="boton${producto.codigo}"> Agregar al carrito</button>
+                          </form>
+             
+                     </div>
+                 </div>
+                 
+                 <datalist id="listaOpciones">
+                 <option value="6">
+                 <option value="12">
+                 <option value="24">
+                 </datalist>
+                 `;
+                 contenedor.append(carritoCompras);
+                 const botonCarrito = document.getElementById(`boton${producto.codigo}`);
+                 botonCarrito.addEventListener("click", () => agregarAlCarrito(producto.codigo));
+             
+                 //  sacarle default al form, no me funciona (agregue el input y el button a un form con id `form${producto.codigo}`)
+                 const form = document.getElementById(`idFormulario${producto.codigo}`);
+                 form.addEventListener("click", (e) => {
+                     e.preventDefault()
+                 })
+             
+             
+                 // agregando sweet alert al boton de agregar al carrito
+                 botonCarrito.addEventListener("click", () => {
+                     Swal.fire({
+                         position: 'center',
+                         icon: 'success',
+                         title: 'Producto cargado correctamente',
+                         showConfirmButton: false,
+                         timer: 1500
+                     })
+                 });
+             
+                 // Leyendo cantidad de latas pedidas y transportando esa cantidad al array para generar el pedido y el precio final
+                 const idInput = document.getElementById(`idInput${producto.codigo}`);
+             
+                 botonCarrito.addEventListener("click", () => leerCantidad(idInput))
+             
+                 function leerCantidad() {
+                     console.log(idInput.value);
+                     let cantidadPedida = idInput.value;
+                     console.log("cantidad pedida", cantidadPedida);
+             
+             
+                     // ternario FUNCIONAL reemplazando cadena de if de abajo. dejo silenciado porque me resulta mas practico leer de la otra forma
+                     // botonCarrito === boton1 ? listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1 :  botonCarrito === boton2 ? listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1 :botonCarrito === boton3 ? listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1 : botonCarrito === boton4 ? listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1 : botonCarrito === boton5 ? listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1 : botonCarrito === boton6 ? listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1 : console.log("fin");
+                     
+                     if (botonCarrito === boton1) {
+                         listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1;
+                     }
+             
+                     if (botonCarrito === boton2) {
+                         listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1;
+                     }
+             
+                     if (botonCarrito === boton3) {
+                         listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1;
+                     }
+             
+                     if (botonCarrito === boton4) {
+                         listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1;
+                     }
+             
+                     if (botonCarrito === boton5) {
+                         listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1;
+                     }
+             
+                     if (botonCarrito === boton6) {
+                         listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1;
+                     }
+             
+             
+             // agrego clase para ocultar el carrito cada vez que cargo producto nuevo para que se recargue al apretar "ver carrito"
+                     carritoContenedor.classList.add("ocultar");
+                 }
+             
+             };
     })
+    // console.log("productosResponse response.json", productosResponse);
 
 
-    // agregando sweet alert al boton de agregar al carrito
-    botonCarrito.addEventListener("click", () => {
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Producto cargado correctamente',
-            showConfirmButton: false,
-            timer: 1500
-        })
-    });
-
-    // Leyendo cantidad de latas pedidas y transportando esa cantidad al array para generar el pedido y el precio final
-    const idInput = document.getElementById(`idInput${producto.codigo}`);
-
-    botonCarrito.addEventListener("click", () => leerCantidad(idInput))
-
-    function leerCantidad() {
-        console.log(idInput.value);
-        let cantidadPedida = idInput.value;
-        console.log("cantidad pedida", cantidadPedida);
-
-
-        // ternario FUNCIONAL reemplazando cadena de if de abajo. dejo silenciado porque me resulta mas practico leer de la otra forma
-        // botonCarrito === boton1 ? listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1 :  botonCarrito === boton2 ? listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1 :botonCarrito === boton3 ? listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1 : botonCarrito === boton4 ? listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1 : botonCarrito === boton5 ? listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1 : botonCarrito === boton6 ? listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1 : console.log("fin");
-        
-        if (botonCarrito === boton1) {
-            listaProductos[0].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[0].unidadesPedidas) - 1;
-        }
-
-        if (botonCarrito === boton2) {
-            listaProductos[1].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[1].unidadesPedidas) - 1;
-        }
-
-        if (botonCarrito === boton3) {
-            listaProductos[2].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[2].unidadesPedidas) - 1;
-        }
-
-        if (botonCarrito === boton4) {
-            listaProductos[3].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[3].unidadesPedidas) - 1;
-        }
-
-        if (botonCarrito === boton5) {
-            listaProductos[4].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[4].unidadesPedidas) - 1;
-        }
-
-        if (botonCarrito === boton6) {
-            listaProductos[5].unidadesPedidas = parseInt(cantidadPedida) + parseInt(listaProductos[5].unidadesPedidas) - 1;
-        }
-
-
-// agrego clase para ocultar el carrito cada vez que cargo producto nuevo para que se recargue al apretar "ver carrito"
-        carritoContenedor.classList.add("ocultar");
-    }
+    
 
 };
+
+cargar ();
+
+
 
 // Funcionalidad al boton de Ver carrito
 function renderizadoPrecio() {

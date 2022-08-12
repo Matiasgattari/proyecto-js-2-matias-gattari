@@ -70,7 +70,10 @@ registrar.addEventListener("click", () => {
 // agregando evento al boton de login
 const botonLogin = document.getElementById(`botonLogin`);
 
+
+
 botonLogin.addEventListener(`click`, () => {
+
 // trayendo valores del localStorage como array
 let usuariosStorage = JSON.parse(localStorage.getItem("usuarios"));
 console.log(usuariosStorage);
@@ -92,13 +95,18 @@ console.log(`log de usuarioEncontrado`, usuarioEncontrado);
 
 
 // if reemplazado por ternario. validacion usuario y contrasenia
-usuarioEncontrado.contrasenia === contraseniaLoginValor ? Swal.fire({
-    title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
+usuarioEncontrado.contrasenia === contraseniaLoginValor ? 
+Swal.fire({
+    title: `Sesion iniciada correctamente, bienvenido ${usuarioEncontrado.nombre} !`,
     timer: 2000,
     timerProgressBar: true,
     allowOutsideClick: true,
-    showConfirmButton: false
-}) : Swal.fire({
+    showConfirmButton: false,
+    
+}, setTimeout(function () {
+    window.location.href="../index.html"
+},2000))  
+: Swal.fire({
     title: `Intente nuevamente, los valores no coinciden`,
     timer: 2000,
     timerProgressBar: true,
@@ -106,26 +114,6 @@ usuarioEncontrado.contrasenia === contraseniaLoginValor ? Swal.fire({
     showConfirmButton: false
 });
 
-
-
-// if original para borrar
-// if (usuarioEncontrado.contrasenia === contraseniaLoginValor) {
-//     Swal.fire({
-//                     title: `Sesion iniciada correctamente, bienvenido! ${usuarioEncontrado.nombre}`,
-//                     timer: 2000,
-//                     timerProgressBar: true,
-//                     allowOutsideClick: true,
-//                     showConfirmButton: false
-//                 });
-// } else {
-//     Swal.fire({
-//                     title: `Intente nuevamente, los valores no coinciden`,
-//                     timer: 2000,
-//                     timerProgressBar: true,
-//                     allowOutsideClick: true,
-//                     showConfirmButton: false
-//                 });
-// }
 
 });
 
